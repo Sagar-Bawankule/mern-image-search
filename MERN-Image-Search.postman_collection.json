@@ -1,0 +1,288 @@
+{
+  "info": {
+    "name": "MERN Image Search API",
+    "description": "API endpoints for MERN Image Search Application with OAuth authentication",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Get Current User",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/auth/current-user",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "current-user"]
+            },
+            "description": "Get currently logged-in user information"
+          },
+          "response": [
+            {
+              "name": "Success - User Logged In",
+              "originalRequest": {
+                "method": "GET",
+                "url": "{{baseUrl}}/auth/current-user"
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"user\": {\n    \"id\": \"507f1f77bcf86cd799439011\",\n    \"displayName\": \"John Doe\",\n    \"email\": \"john@example.com\",\n    \"avatar\": \"https://avatars.githubusercontent.com/u/12345\"\n  }\n}"
+            },
+            {
+              "name": "Unauthorized - Not Logged In",
+              "originalRequest": {
+                "method": "GET",
+                "url": "{{baseUrl}}/auth/current-user"
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"user\": null\n}"
+            }
+          ]
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/auth/logout",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "logout"]
+            },
+            "description": "Logout the current user and destroy session"
+          },
+          "response": [
+            {
+              "name": "Success",
+              "originalRequest": {
+                "method": "GET",
+                "url": "{{baseUrl}}/auth/logout"
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Logged out successfully\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Google OAuth - Initiate",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/auth/google",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "google"]
+            },
+            "description": "Redirects to Google OAuth consent screen. Use in browser, not Postman."
+          }
+        },
+        {
+          "name": "GitHub OAuth - Initiate",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/auth/github",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "github"]
+            },
+            "description": "Redirects to GitHub OAuth consent screen. Use in browser, not Postman."
+          }
+        },
+        {
+          "name": "Facebook OAuth - Initiate",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/auth/facebook",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "facebook"]
+            },
+            "description": "Redirects to Facebook OAuth consent screen. Use in browser, not Postman."
+          }
+        }
+      ]
+    },
+    {
+      "name": "API",
+      "item": [
+        {
+          "name": "Search Images",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/search?query=mountains&page=1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "search"],
+              "query": [
+                {
+                  "key": "query",
+                  "value": "mountains",
+                  "description": "Search term for images"
+                },
+                {
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number (optional, default: 1)"
+                }
+              ]
+            },
+            "description": "Search for images using Unsplash API. Requires authentication."
+          },
+          "response": [
+            {
+              "name": "Success",
+              "originalRequest": {
+                "method": "GET",
+                "url": "{{baseUrl}}/api/search?query=mountains"
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"results\": [\n    {\n      \"id\": \"abc123\",\n      \"urls\": {\n        \"raw\": \"https://images.unsplash.com/photo-123\",\n        \"full\": \"https://images.unsplash.com/photo-123?w=2000\",\n        \"regular\": \"https://images.unsplash.com/photo-123?w=1080\",\n        \"small\": \"https://images.unsplash.com/photo-123?w=400\",\n        \"thumb\": \"https://images.unsplash.com/photo-123?w=200\"\n      },\n      \"user\": {\n        \"name\": \"John Doe\",\n        \"username\": \"johndoe\",\n        \"portfolio_url\": \"https://unsplash.com/@johndoe\"\n      },\n      \"description\": \"Beautiful mountain landscape\",\n      \"alt_description\": \"snow covered mountains during daytime\",\n      \"likes\": 1234\n    }\n  ],\n  \"total\": 10000,\n  \"total_pages\": 1000\n}"
+            },
+            {
+              "name": "Unauthorized",
+              "originalRequest": {
+                "method": "GET",
+                "url": "{{baseUrl}}/api/search?query=mountains"
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Unauthorized\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Get Search History",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/search-history",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "search-history"]
+            },
+            "description": "Get the current user's search history. Requires authentication."
+          },
+          "response": [
+            {
+              "name": "Success",
+              "originalRequest": {
+                "method": "GET",
+                "url": "{{baseUrl}}/api/search-history"
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"_id\": \"507f1f77bcf86cd799439011\",\n    \"query\": \"mountains\",\n    \"createdAt\": \"2025-10-30T12:00:00.000Z\"\n  },\n  {\n    \"_id\": \"507f1f77bcf86cd799439012\",\n    \"query\": \"sunset\",\n    \"createdAt\": \"2025-10-30T11:30:00.000Z\"\n  },\n  {\n    \"_id\": \"507f1f77bcf86cd799439013\",\n    \"query\": \"ocean\",\n    \"createdAt\": \"2025-10-30T11:00:00.000Z\"\n  }\n]"
+            },
+            {
+              "name": "Unauthorized",
+              "originalRequest": {
+                "method": "GET",
+                "url": "{{baseUrl}}/api/search-history"
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Unauthorized\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Get Top Searches",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/top-searches",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "top-searches"]
+            },
+            "description": "Get the top 10 most searched terms across all users. No authentication required."
+          },
+          "response": [
+            {
+              "name": "Success",
+              "originalRequest": {
+                "method": "GET",
+                "url": "{{baseUrl}}/api/top-searches"
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"_id\": \"mountains\",\n    \"count\": 145\n  },\n  {\n    \"_id\": \"sunset\",\n    \"count\": 98\n  },\n  {\n    \"_id\": \"ocean\",\n    \"count\": 87\n  },\n  {\n    \"_id\": \"forest\",\n    \"count\": 76\n  },\n  {\n    \"_id\": \"city\",\n    \"count\": 65\n  }\n]"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5000",
+      "type": "string"
+    }
+  ]
+}
