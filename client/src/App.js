@@ -4,6 +4,10 @@ import { AuthProvider, useAuth } from './context/AuthContext';
 import Navbar from './components/Navbar';
 import Login from './pages/Login';
 import Home from './pages/Home';
+import Favorites from './pages/Favorites';
+import Collections from './pages/Collections';
+import Dashboard from './pages/Dashboard';
+import Profile from './pages/Profile';
 
 // Protected Route Component
 const ProtectedRoute = ({ children }) => {
@@ -42,6 +46,46 @@ function App() {
               <ProtectedRoute>
                 <AuthenticatedLayout>
                   <Home />
+                </AuthenticatedLayout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/favorites"
+            element={
+              <ProtectedRoute>
+                <AuthenticatedLayout>
+                  <Favorites />
+                </AuthenticatedLayout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/collections"
+            element={
+              <ProtectedRoute>
+                <AuthenticatedLayout>
+                  <Collections />
+                </AuthenticatedLayout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <AuthenticatedLayout>
+                  <Dashboard />
+                </AuthenticatedLayout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute>
+                <AuthenticatedLayout>
+                  <Profile />
                 </AuthenticatedLayout>
               </ProtectedRoute>
             }
