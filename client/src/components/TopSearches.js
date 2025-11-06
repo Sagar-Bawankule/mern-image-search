@@ -21,7 +21,7 @@ const TopSearches = () => {
   if (topSearches.length === 0) return null;
 
   return (
-    <div className="top-searches-banner">
+    <div className="top-searches-banner" background-color="black">
       <div className="banner-content">
         <h3>🔥 Top Searches</h3>
         <div className="search-tags">

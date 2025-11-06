@@ -1,5 +1,4 @@
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
-const FacebookStrategy = require('passport-facebook').Strategy;
 const GitHubStrategy = require('passport-github2').Strategy;
 const User = require('../models/User');
 
@@ -38,34 +37,6 @@ module.exports = function(passport) {
         displayName: profile.displayName,
         email: profile.emails[0].value,
         avatar: profile.photos[0].value
-      });
-      
-      done(null, user);
-    } catch (error) {
-      done(error, null);
-    }
-  }));
-
-  // Facebook OAuth Strategy
-  passport.use(new FacebookStrategy({
-    clientID: process.env.FACEBOOK_APP_ID,
-    clientSecret: process.env.FACEBOOK_APP_SECRET,
-    callbackURL: `${process.env.SERVER_URL}/auth/facebook/callback`,
-    profileFields: ['id', 'displayName', 'photos', 'email']
-  },
-  async (accessToken, refreshToken, profile, done) => {
-    try {
-      let user = await User.findOne({ facebookId: profile.id });
-      
-      if (user) {
-        return done(null, user);
-      }
-      
-      user = await User.create({
-        facebookId: profile.id,
-        displayName: profile.displayName,
-        email: profile.emails ? profile.emails[0].value : null,
-        avatar: profile.photos ? profile.photos[0].value : null
       });
       
       done(null, user);

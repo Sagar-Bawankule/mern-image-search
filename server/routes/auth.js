@@ -14,18 +14,6 @@ router.get('/google/callback',
   }
 );
 
-// Facebook OAuth routes
-router.get('/facebook',
-  passport.authenticate('facebook', { scope: ['email'] })
-);
-
-router.get('/facebook/callback',
-  passport.authenticate('facebook', { failureRedirect: `${process.env.CLIENT_URL}/login` }),
-  (req, res) => {
-    res.redirect(process.env.CLIENT_URL);
-  }
-);
-
 // GitHub OAuth routes
 router.get('/github',
   passport.authenticate('github', { scope: ['user:email'] })
@@ -56,7 +44,11 @@ router.get('/current-user', (req, res) => {
         id: req.user._id,
         displayName: req.user.displayName,
         email: req.user.email,
-        avatar: req.user.avatar
+        avatar: req.user.avatar,
+        bio: req.user.bio,
+        preferences: req.user.preferences,
+        stats: req.user.stats,
+        createdAt: req.user.createdAt
       }
     });
   } else {
